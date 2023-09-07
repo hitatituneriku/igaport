@@ -14,7 +14,7 @@ add_action('init', function () {
 		'public' => true,
 		'menu_position' => 2,
 		'menu_icon' => 'dashicons-welcome-write-blog',
-		'supports' => ['thumbnail', 'title', 'editor','custom-fields'],
+		'supports' => ['thumbnail', 'title', 'editor', 'custom-fields'],
 		'show_in_rest' => true,
 	]);
 });
@@ -22,9 +22,9 @@ add_action('init', function () {
 /** CSS 読み込み */
 function my_enqueue_styles()
 {
-	wp_enqueue_style('reset', get_template_directory_uri() .'/css/html5reset-1.6.1.css', array());
-	wp_enqueue_style('style', get_template_directory_uri() .'/css/style.css', array('reset'));
-	
+	wp_enqueue_style('reset', get_template_directory_uri() . '/css/html5reset-1.6.1.css', array());
+	wp_enqueue_style('style', get_template_directory_uri() . '/css/style.css', array('reset'), filemtime( get_theme_file_path('css/style.css')));
+
 	if (is_page('Contact')) {
 		wp_enqueue_style('bootstrap', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css");
 	}
@@ -39,7 +39,7 @@ function igaport_scripts()
 	wp_style_add_data('igaport-style', 'rtl', 'replace');
 
 	wp_enqueue_script('igaport-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
-	wp_enqueue_script('my-script', get_template_directory_uri(). '/js/my-script.js', array(),_S_VERSION, true);
+	wp_enqueue_script('my-script', get_template_directory_uri() . '/js/my-script.js', array(), _S_VERSION, true);
 
 	if (is_singular() && comments_open() && get_option('thread_comments')) {
 		wp_enqueue_script('comment-reply');
@@ -212,59 +212,64 @@ if (defined('JETPACK__VERSION')) {
 add_action('wp_ajax_custom_sort_posts', 'custom_sort_posts');
 add_action('wp_ajax_nopriv_custom_sort_posts', 'custom_sort_posts');
 
-function custom_sort_posts() {
-    $selectedOption = $_POST['sort_option'];
-    $order = ($selectedOption === 'level-high-sort') ? 'DESC' : 'ASC';
+function custom_sort_posts()
+{
+	$selectedOption = $_POST['sort_option'];
+	$order = ($selectedOption === 'level-high-sort') ? 'DESC' : 'ASC';
 
-    $args = [
-        'post_type' => 'portfolio',
-        'posts_per_page' => 5,
-        'orderby' => 'meta_value_num',
-        'meta_key' => 'level',
-        'order' => $order,
-    ];
+	$args = [
+		'post_type' => 'portfolio',
+		'posts_per_page' => 5,
+		'orderby' => 'meta_value_num',
+		'meta_key' => 'level',
+		'order' => $order,
+	];
 
-    $news_query = new WP_Query($args);
+	$news_query = new WP_Query($args);
 
-    if ($news_query->have_posts()) :
-        while ($news_query->have_posts()) :
-            $news_query->the_post();
-            $post_link = get_post_meta(get_the_ID(), 'PortfolioLink', true);
-            $meter_class = 'meter__' . get_post_meta(get_the_ID(), 'level', true);
-            ?>
-            <!-- ここにhtml -->
-            <li class="card__item">
-                <a href="<?php echo $post_link; ?>" id="CardLink" target="_blank" rel="noopener noreferrer" class="card__link">
-                    <figure class="card__img">
-                        <h2 class="card__title">
-                            <?php the_title(); ?>
-                        </h2>
-                        <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="サムネをここに表示">
-                    </figure>
-                    <article class="card__body">
-                        <div class="card__body_item">
-                            <span class="text-s">難易度</span>
-                            <figure class="meter">
-                                <!-- 難易度をクラスで指定 -->
-                                <div id="MeterLevel" class="meter__bar <?php echo $meter_class; ?>"></div>
-                            </figure>
-                        </div>
-                        <div class="card__body_item">
-                            <p>
-                                <?php the_content(); ?>
-                            </p>
-                        </div>
-                    </article>
-                </a>
-            </li>
-            <?php
-        endwhile;
-    else :
-        echo '<p>投稿はまだありません。</p>';
-    endif;
+	if ($news_query->have_posts()) :
+		while ($news_query->have_posts()) :
+			$news_query->the_post();
+			$post_link = get_post_meta(get_the_ID(), 'PortfolioLink', true);
+			$git_link = get_post_meta(get_the_ID(), 'GitLink', true);
+			$meter_class = 'meter__' . get_post_meta(get_the_ID(), 'level', true);
+?>
+			<!-- ここにhtml -->
+			<li class="card__item">
+				<a href="<?php echo $post_link; ?>" id="CardLink" target="_blank" rel="noopener noreferrer" class="card__link">
+					<figure class="card__img">
+						<h2 class="card__title">
+							<?php the_title(); ?>
+						</h2>
+						<img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="サムネをここに表示">
+					</figure>
+					<article class="card__body">
+						<div class="card__body_item">
+							<span class="text-s">難易度</span>
+							<figure class="meter">
+								<!-- 難易度をクラスで指定 -->
+								<div id="MeterLevel" class="meter__bar <?php echo $meter_class; ?>"></div>
+							</figure>
+						</div>
+						<div class="card__body_item">
+							<p>
+								<?php the_content(); ?>
+							</p>
+						</div>
+					</article>
+				</a>
+					<a href="<?php echo $git_link; ?>" id="GitLink" target="_blank" rel="noopener noreferrer" class="card__git_link">
+						<img src="<?php echo get_template_directory_uri() . '/img/github-480.png' ?>" alt="GitHubアイコンをここに表示">
+					</a>
+			</li>
+<?php
+		endwhile;
+	else :
+		echo '<p>投稿はまだありません。</p>';
+	endif;
 
-    wp_reset_postdata();
-    $output = ob_get_clean();
-    echo $output;
-    wp_die();
+	wp_reset_postdata();
+	$output = ob_get_clean();
+	echo $output;
+	wp_die();
 }

@@ -83,7 +83,7 @@ body {
 	line-height: 1.8em;
 	font-family: 'メイリオ', Meiryo, 'Hiragino Kaku Gothic ProN', sans-serif;
 	color: var(--color-text);
-	background-image: url(../img/blue_ストライプ.png);
+	background-image: url(../img/blue_stripe.png);
 	background-repeat: repeat;
 	font-size: 1em;
 }
@@ -205,7 +205,8 @@ section {
 	box-shadow: 0 3px 4px rgba(0, 0, 0, 0.32);
 	/*影*/
 }
-.menu-item a{
+
+.menu-item a {
 	margin: 1em;
 }
 
@@ -214,6 +215,10 @@ section {
 	background-color: #fff;
 	border-color: currentColor;
 	color: blue;
+}
+
+.card__item {
+	position: relative;
 }
 
 .card__link {
@@ -252,6 +257,23 @@ section {
 		-.8px .8px 0 var(--color-text), .8px -.8px 0 var(--color-text),
 		0px .8px 0 var(--color-text), 0-.8px 0 var(--color-text),
 		-.8px 0 0 var(--color-text), .8px 0 0 var(--color-text);
+}
+
+.card__git_link {
+	position: absolute;
+	padding: 0;
+	width: 15%;
+	height: auto;
+	left: 82%;
+	bottom: 34%;
+	background-color: white;
+	border-radius: 50%;
+}
+
+.card__git_link img {
+	max-width: 100%;
+	height: auto;
+	display: block;
 }
 
 .card__body {
@@ -406,6 +428,22 @@ section {
 		height: 140px;
 	}
 
+	.card__git_link {
+		position: absolute;
+		padding: 0;
+		width: 15%;
+		height: auto;
+		left: 82%;
+		bottom: 34%;
+		background-color: white;
+		border-radius: 50%;
+	}
+	
+	.card__git_link img {
+		max-width: 100%;
+		height: auto;
+		display: block;
+	}
 
 	.form-control {
 		max-width: 70%;
@@ -445,6 +483,15 @@ section {
 
 	.card__item:hover .card__title {
 		opacity: .5;
+	}
+
+	.card__git_link:hover,
+	.card__git_link:focus {
+		opacity: .7;
+		padding: .3%;
+		box-sizing: border-box;
+		box-shadow: 0px 0px 1px 1px #cccccc;
+		transition: .2s;
 	}
 }
 
