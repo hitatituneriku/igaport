@@ -139,10 +139,6 @@ section {
 	height: 60px;
 }
 
-.site-main {
-	padding: 20px;
-}
-
 .form-control {
 	max-width: 90%;
 }
@@ -208,6 +204,7 @@ section {
 
 .menu-item a {
 	margin: 1em;
+	color: var(--color-text);
 }
 
 .menu-item:focus,
@@ -488,9 +485,8 @@ section {
 	.card__git_link:hover,
 	.card__git_link:focus {
 		opacity: .7;
-		padding: .3%;
 		box-sizing: border-box;
-		box-shadow: 0px 0px 1px 1px #cccccc;
+		box-shadow: 0px 0px 1px 1px #808080;
 		transition: .2s;
 	}
 }
