@@ -159,6 +159,10 @@ section {
 	margin-top: 0;
 }
 
+.site-footer {
+	margin-top: 30px;
+}
+
 /* モジュール
 		=========================================================================== */
 .header {
@@ -358,6 +362,13 @@ section {
 .text-xs {
 	font-size: .7em;
 }
+
+.copy-right {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+}
+
 
 /* レスポンシブ
 		=========================================================================== */

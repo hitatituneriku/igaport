@@ -24,6 +24,7 @@ function my_enqueue_styles()
 {
 	wp_enqueue_style('reset', get_template_directory_uri() . '/css/html5reset-1.6.1.css', array());
 	wp_enqueue_style('style', get_template_directory_uri() . '/css/style.css', array('reset'), filemtime( get_theme_file_path('css/style.css')));
+	wp_enqueue_style('boxIcon', 'https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css',array('reset'));
 
 	if (is_page('Contact')) {
 		wp_enqueue_style('bootstrap', "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css");
