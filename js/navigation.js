@@ -1,27 +1,27 @@
 /**
- * File navigation.js.
+ * ファイル navigation.js.
  *
- * Handles toggling the navigation menu for small screens and enables TAB key
- * navigation support for dropdown menus.
+ * 小さな画面用のナビゲーションメニューの切り替えと、
+ * ドロップダウンメニューの TAB キーによるナビゲーションサポートを処理します。
  */
 ( function() {
 	const siteNavigation = document.getElementById( 'site-navigation' );
 
-	// Return early if the navigation doesn't exist.
+	// ナビゲーションが存在しない場合は早期にリターンします。
 	if ( ! siteNavigation ) {
 		return;
 	}
 
 	const button = siteNavigation.getElementsByTagName( 'button' )[ 0 ];
 
-	// Return early if the button doesn't exist.
+	// ボタンが存在しない場合は早期にリターンします。
 	if ( 'undefined' === typeof button ) {
 		return;
 	}
 
 	const menu = siteNavigation.getElementsByTagName( 'ul' )[ 0 ];
 
-	// Hide menu toggle button if menu is empty and return early.
+	// メニューが存在しない場合は、メニュートグルボタンを非表示にして早期にリターンします。
 	if ( 'undefined' === typeof menu ) {
 		button.style.display = 'none';
 		return;
@@ -31,7 +31,7 @@
 		menu.classList.add( 'nav-menu' );
 	}
 
-	// Toggle the .toggled class and the aria-expanded value each time the button is clicked.
+	// ボタンがクリックされるたびに、.toggled クラスと aria-expanded 値を切り替えます。
 	button.addEventListener( 'click', function() {
 		siteNavigation.classList.toggle( 'toggled' );
 
@@ -42,7 +42,7 @@
 		}
 	} );
 
-	// Remove the .toggled class and set aria-expanded to false when the user clicks outside the navigation.
+	// ユーザーがナビゲーションの外部をクリックした場合、.toggled クラスを削除し、aria-expanded を false に設定します。
 	document.addEventListener( 'click', function( event ) {
 		const isClickInside = siteNavigation.contains( event.target );
 
@@ -52,32 +52,32 @@
 		}
 	} );
 
-	// Get all the link elements within the menu.
+	// メニュー内のすべてのリンク要素を取得します。
 	const links = menu.getElementsByTagName( 'a' );
 
-	// Get all the link elements with children within the menu.
+	// 子要素を持つリンク要素を含むすべてのリンク要素を取得します。
 	const linksWithChildren = menu.querySelectorAll( '.menu-item-has-children > a, .page_item_has_children > a' );
 
-	// Toggle focus each time a menu link is focused or blurred.
+	// メニューリンクがフォーカスまたはフォーカスが外れるたびにフォーカスを切り替えます。
 	for ( const link of links ) {
 		link.addEventListener( 'focus', toggleFocus, true );
 		link.addEventListener( 'blur', toggleFocus, true );
 	}
 
-	// Toggle focus each time a menu link with children receive a touch event.
+	// 子要素を持つリンク要素がタッチイベントを受け取るたびにフォーカスを切り替えます。
 	for ( const link of linksWithChildren ) {
 		link.addEventListener( 'touchstart', toggleFocus, false );
 	}
 
 	/**
-	 * Sets or removes .focus class on an element.
+	 * 要素に .focus クラスを設定または削除します。
 	 */
 	function toggleFocus() {
 		if ( event.type === 'focus' || event.type === 'blur' ) {
 			let self = this;
-			// Move up through the ancestors of the current link until we hit .nav-menu.
+			// 現在のリンクの祖先要素を .nav-menu に到達するまで上に移動します。
 			while ( ! self.classList.contains( 'nav-menu' ) ) {
-				// On li elements toggle the class .focus.
+				// li 要素の場合、.focus クラスを切り替えます。
 				if ( 'li' === self.tagName.toLowerCase() ) {
 					self.classList.toggle( 'focus' );
 				}

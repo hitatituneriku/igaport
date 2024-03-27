@@ -37,21 +37,13 @@
 							<h1><?php bloginfo('name'); ?></h1>
 						</a>
 					</div>
-
-					<nav id="site-navigation" class="main-navigation">
-						<?php
-						wp_nav_menu(
-							array(
-								'theme_location' => 'menu-1',
-								'menu_id'        => 'primary-menu',
-							)
-						);
-						?>
-					</nav><!-- #site-navigation -->
-
-				<?php
-			 	else :
-				?>
+					<button id="imageButton" class="nav-btn">
+						<img src= "<?php echo get_template_directory_uri().'/img/blue_hamburger.png'?>"  alt="">
+					</button>
+					<div id="menuContent">
+						<!-- javascriptでボタンクリック時にコンテンツを表示 -->
+					</div>
+					
 					<div class="header header-box header-box-page">
 						<a class="top-title" href="<?php echo esc_url(home_url('/')); ?>" rel="home">
 							<h1><?php bloginfo('name'); ?></h1>
